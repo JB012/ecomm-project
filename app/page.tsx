@@ -14,7 +14,7 @@ export default function Home() {
   
   return (
     <>
-      { isClient && <div className="flex w-full flex-col">
+      { isClient && <div className="flex w-full flex-col gap-10">
         <Header />     
         <div className="w-full h-120">
           <Image src={'/image3.jpg'} alt={'Header Image'} width={0} height={0} sizes="100vw" style={{width: "100%", height: "100%", objectFit: 'cover'}}/>

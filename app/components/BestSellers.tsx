@@ -8,10 +8,10 @@ export default function BestSellers() {
             <div className="flex self-center px-4">
                     <Icon path={mdiLessThan} size={1} />
             </div>
-            <div className="flex w-full flex-col overflow-hidden">
-                <div className="flex py-2 justify-center relative">
-                    <div className="text-3xl">Best Sellers</div>
-                    <button className="self-end absolute right-0">See More</button>
+            <div className="flex w-full flex-col">
+                <div className="flex py-2 justify-center items-center relative">
+                    <div className="text-3xl pb-2">Best Sellers</div>
+                    <button className="absolute right-0">See More</button>
                 </div>
                 <div className="flex self-center gap-8">
                     <ProductItem />

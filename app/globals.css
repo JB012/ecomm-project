@@ -5,3 +5,11 @@
   --foreground: #171717;
 }
 
+.container-image {
+  opacity: 0.8;
+  position: relative;
+}
+
+.container-image:hover {
+  opacity: 1;
+}
