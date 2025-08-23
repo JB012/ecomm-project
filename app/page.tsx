@@ -1,9 +1,12 @@
 "use client"
 import Header from "./components/Header";
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import BestSellers from "./components/BestSellers";
 import ByCategory from "./components/ByCategory";
+import NewsLetter from "./components/NewsLetter";
+import Footer from "./components/Footer";
+import HeaderPhoto from "./components/HeaderPhoto";
+
 export default function Home() {
   // To prevent a hydration mismatch. 
   const [isClient, setClient] = useState(false);
@@ -14,14 +17,13 @@ export default function Home() {
   
   return (
     <>
-      { isClient && <div className="flex w-full flex-col gap-10">
+      { isClient && <div className="flex w-full flex-col">
         <Header />     
-        <div className="w-full h-120">
-          <Image src={'/image3.jpg'} alt={'Header Image'} width={0} height={0} sizes="100vw" style={{width: "100%", height: "100%", objectFit: 'cover'}}/>
-        </div>
-        
+        <HeaderPhoto />
         <BestSellers />
         <ByCategory />
+        <NewsLetter />
+        <Footer />
       </div>}
     </>
   );

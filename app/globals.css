@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 :root {
+  --light-green: rgb(234, 241, 234);
+  --mid-green: rgb(195, 209, 176);
+  --dark-green: rgb(89, 103, 78);
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -12,4 +15,31 @@
 
 .container-image:hover {
   opacity: 1;
+}
+
+button {
+  background-color: var(--dark-green);
+  color: white;
+  width: 125px;
+}
+
+#category-container {
+  background-color: var(--light-green);
+}
+
+#news-container {
+  background-color: var(--mid-green);
+}
+
+#footer-container {
+  background-color: var(--dark-green);
+  color: white;
+}
+
+#header-container {
+  background-color: var(--mid-green);
+}
+
+a:active {
+  color: var(--mid-green);
 }

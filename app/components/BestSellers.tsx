@@ -5,24 +5,23 @@ import { mdiGreaterThan, mdiLessThan } from "@mdi/js"
 export default function BestSellers() {
     return (
         <div className="flex w-full h-96">
-            <div className="flex self-center px-4">
-                    <Icon path={mdiLessThan} size={1} />
+            <div className="flex self-center relative px-4">
+                    <Icon className="left-14 absolute" path={mdiLessThan} size={1} />
             </div>
             <div className="flex w-full flex-col">
                 <div className="flex py-2 justify-center items-center relative">
                     <div className="text-3xl pb-2">Best Sellers</div>
-                    <button className="absolute right-0">See More</button>
+                    <button className=" absolute right-4">See More</button>
                 </div>
                 <div className="flex self-center gap-8">
                     <ProductItem />
                     <ProductItem />
                     <ProductItem />
-                    <ProductItem />
-                    
+                    <ProductItem />   
                 </div>
             </div>
-            <div className="flex self-center px-4">
-                <Icon path={mdiGreaterThan} size={1}/>
+            <div className="flex self-center px-4 relative">
+                <Icon className="right-14 absolute" path={mdiGreaterThan} size={1}/>
             </div>
         </div>
     )
