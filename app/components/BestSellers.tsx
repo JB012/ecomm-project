@@ -10,7 +10,7 @@ export default function BestSellers() {
             </div>
             <div className="flex w-full flex-col">
                 <div className="flex py-2 justify-center items-center relative">
-                    <div className="text-3xl pb-2">Best Sellers</div>
+                    <div className="text-3xl font-medium pb-2">Best Sellers</div>
                     <button className=" absolute right-4">See More</button>
                 </div>
                 <div className="flex self-center gap-8">

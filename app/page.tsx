@@ -17,14 +17,14 @@ export default function Home() {
   
   return (
     <>
-      { isClient && <div className="flex w-full flex-col">
-        <Header />     
+      { isClient && 
+      <div className="flex w-full flex-col">
         <HeaderPhoto />
         <BestSellers />
         <ByCategory />
         <NewsLetter />
-        <Footer />
-      </div>}
+      </div>
+      }
     </>
   );
 }

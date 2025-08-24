@@ -9,12 +9,18 @@
 }
 
 .container-image {
-  opacity: 0.8;
+  opacity: 0.45;
   position: relative;
 }
 
 .container-image:hover {
   opacity: 1;
+  cursor: pointer;
+}
+
+.container-text {
+  align-self: center;
+  position: absolute;
 }
 
 button {
