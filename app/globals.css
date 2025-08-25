@@ -49,3 +49,14 @@ button {
 a:active {
   color: var(--mid-green);
 }
+
+.slider {
+  accent-color: var(--dark-green); 
+}
+
+.products-container {
+  display: grid;
+  column-gap: 45px;
+  row-gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(186px, 1fr));
+}

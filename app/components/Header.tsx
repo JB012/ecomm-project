@@ -16,7 +16,7 @@ export default function Header() {
             </div>
             <div className="flex flex-1 justify-between">
                 <ul className='flex pl-20 font-medium gap-10'>
-                    <li>Shop All</li>
+                    <Link href={'/viewProducts'}>Shop All</Link>
                     <li>Shop By Category</li>
                     <li>Best Sellers</li>
                     <li>Sale</li>
