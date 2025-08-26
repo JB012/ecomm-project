@@ -4,7 +4,7 @@ import { mdiGreaterThan, mdiLessThan } from "@mdi/js"
 
 export default function BestSellers() {
     return (
-        <div className="flex w-full h-96">
+        <div className="flex w-full h-104">
             <div className="flex self-center relative px-4">
                     <Icon className="left-14 absolute" path={mdiLessThan} size={1} />
             </div>
