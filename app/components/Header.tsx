@@ -23,7 +23,9 @@ export default function Header() {
                 </ul>
                 <div className='flex gap-6'>
                     <Icon path={mdiAccount} color={"black"} size={1} />
-                    <Icon path={mdiCartOutline} color={"black"} size={1} />
+                    <Link href='/cart'>
+                        <Icon path={mdiCartOutline} color={"black"} size={1} />
+                    </Link>
                 </div>
             </div>
         </div>
