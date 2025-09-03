@@ -1,11 +1,11 @@
 import CartItem from "../components/CartItem"
-
+import Link from "next/link"
 export default function Cart() {
     return (
         <div className="flex flex-col px-4 py-4 w-full h-full">
             <div className="text-3xl">Cart</div>
             <div className="flex py-3 justify-end">
-                <button>Checkout</button>
+                <Link href='/checkout'><button>Checkout</button></Link>
             </div>
             <div className="flex justify-between">
                 <div>Items</div>

@@ -3,7 +3,6 @@ import Image from "next/image"
 import { useEffect, useState } from "react";
 
 export default function HeaderPhoto() {
-    const [number, setNumber] = useState(Math.floor(Math.random() * 13 + 1));
 
     return (
         <div className="w-full h-120 relative">
@@ -12,7 +11,7 @@ export default function HeaderPhoto() {
                 <div className="text-5xl">Order the latest items with hot deals</div>
                 <button className="self-end">Shop All</button>
             </div>
-            <Image src={`/image${number}.jpg`} className="opacity-75" alt={'Header Image'} width={0} height={0} sizes="100vw" style={{width: "100%", height: "100%", objectFit: 'cover'}}/>
+            <Image src={`/headerImage.jpg`} className="opacity-75" alt={'Header Image'} width={0} height={0} sizes="100vw" style={{width: "100%", height: "100%", objectFit: 'cover'}}/>
         </div>
     )
 }

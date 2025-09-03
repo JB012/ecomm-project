@@ -3,7 +3,6 @@ import { mdiMinus, mdiPlus, mdiTrashCan } from "@mdi/js";
 import Icon from "@mdi/react";
 import Image from "next/image";
 import { useState } from "react";
-import Checkout from "./Checkout";
 
 export default function CartItem() {
     const [amount, setAmount] = useState(1);
@@ -15,7 +14,7 @@ export default function CartItem() {
                 <div className="flex flex-col">
                     <div>Name</div>
                     <div className="flex gap-6">
-                        <div onClick={() => {if (amount > 0) setAmount(amount - 1)}}><Icon path={mdiMinus} size={1} /></div>
+                        <div onClick={() => {if (amount > 1) setAmount(amount - 1)}}><Icon path={mdiMinus} size={1} /></div>
                         <div>{amount}</div>
                         <div onClick={() => setAmount(amount + 1)}><Icon path={mdiPlus} size={1} /></div>
                     </div>

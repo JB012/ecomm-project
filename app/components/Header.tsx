@@ -2,6 +2,8 @@
 import Icon from '@mdi/react';
 import { mdiMagnify, mdiAccount, mdiCartOutline } from '@mdi/js';
 import Link from 'next/link';
+
+
 export default function Header() {
     return(
         <div id="header-container" className="flex w-full h-12 justify-between items-center px-4">
@@ -16,7 +18,7 @@ export default function Header() {
             </div>
             <div className="flex flex-1 justify-between">
                 <ul className='flex pl-20 font-medium gap-10'>
-                    <Link href={'/viewProducts'}>Shop All</Link>
+                    <Link href={'/viewProducts?category=all'}>Shop All</Link>
                     <li>Shop By Category</li>
                     <li>Best Sellers</li>
                     <li>Sale</li>
