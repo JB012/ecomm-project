@@ -34,7 +34,7 @@ export default function ByCategory() {
                             <Image className="container-image" src={"/groceries.jpg"} alt="Category photo" width={280} height={300}/>
                             <div className="container-text">Groceries</div>
                         </Link>
-                        <Link href={'/viewProducts?category=womens-shirts'} className="flex flex-col justify-center items-center">
+                        <Link href={'/viewProducts?category=womens-shoes'} className="flex flex-col justify-center items-center">
                             <Image className="container-image" src={"/womens.jpg"} alt="Category photo" width={280} height={300}/>
                             <div className="container-text">Women&apos;s</div>
                         </Link>

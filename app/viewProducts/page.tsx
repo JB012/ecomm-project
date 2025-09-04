@@ -16,6 +16,7 @@ export default function ViewProducts() {
     useEffect(() => {
         const data = localStorage.getItem('products');
         if (typeof data === "string") {
+            console.log(category);
             if (category === "all") {
                 setProducts(JSON.parse(data));
             }
@@ -83,7 +84,7 @@ export default function ViewProducts() {
                             </div>
                             <div className="products-container">
                                 {
-                                    products.map(product => <ProductItem key={product.id} thumbnail={product.thumbnail} title={product.title} price={product.price}  />)
+                                    products.map(product => <ProductItem key={product.id} product={product} />)
                                 }
                             </div>
                         </div>

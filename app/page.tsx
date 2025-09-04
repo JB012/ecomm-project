@@ -14,7 +14,7 @@ export default function Home() {
   useEffect(() => {
     const data = localStorage.getItem('products');
     if (data === null) {
-      fetch('https://dummyjson.com/products').then(res => res.json()).then(data => {localStorage.setItem('products',JSON.stringify(data['products'])); setProducts(data['products']);});
+      fetch('https://dummyjson.com/products?limit=0').then(res => res.json()).then(data => {localStorage.setItem('products',JSON.stringify(data['products'])); setProducts(data['products']);});
     }
     else {
       setProducts(JSON.parse(data));

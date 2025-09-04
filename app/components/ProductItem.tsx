@@ -1,24 +1,26 @@
 import Image from "next/image"
+import Link from "next/link"
+import { ProductObject } from "../types/ProductObject";
 
 interface Prop {
-    thumbnail: string,
-    title: string,
-    price: number;
+    product: ProductObject;
 }
-
-export default function ProductItem({thumbnail, title, price}: Prop) {
+export default function ProductItem({product}: Prop) {
+    const url = "/products/" + product.id;
 
     return (
-        <div className="flex flex-col gap-2">
+        <>
+        <Link href={url} className="flex flex-col gap-2 cursor-pointer">
             <div className="h-70 w-50">
-                <Image src={thumbnail} alt="Product Item" width={0} height={0} sizes="100px" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+                <Image src={product.thumbnail} alt="Product Item" width={0} height={0} sizes="100px" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
             </div>
             <div>
-                {title}
+                {product.title}
             </div>
             <div>
-                ${price}
+                ${product.price}
             </div>
-        </div>
+        </Link>
+        </>
     )
 }
