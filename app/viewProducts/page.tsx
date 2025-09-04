@@ -16,9 +16,16 @@ export default function ViewProducts() {
     useEffect(() => {
         const data = localStorage.getItem('products');
         if (typeof data === "string") {
-            setProducts(JSON.parse(data));
+            if (category === "all") {
+                setProducts(JSON.parse(data));
+            }
+            else {
+                const allProducts = JSON.parse(data) as Array<ProductObject>;
+                const filteredData = allProducts.filter(product => product.category === category);
+                setProducts(filteredData);
+            }
         }
-    }, []);
+    }, [category]);
 
     return (
         <>
