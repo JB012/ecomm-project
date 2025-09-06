@@ -69,7 +69,7 @@ export default function ViewProducts() {
                         </div>
                         <div className="flex w-full flex-col px-8 pb-8 gap-2">
                             <div className="flex justify-between">
-                                <div>100 products</div>
+                                <div>{products.length} products</div>
                                 <div className="flex">
                                     <div>Sort By:</div>    
                                     <select name="sort_options">

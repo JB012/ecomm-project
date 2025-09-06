@@ -10,6 +10,7 @@ export interface ProductObject {
     rating: number,
     stock: number,
     tags: Array<string>,
+    brand: string,
     sku: string,
     weight: number,
     dimensions: {width: number, height: number, depth: number},
