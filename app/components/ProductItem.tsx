@@ -17,8 +17,10 @@ export default function ProductItem({product}: Prop) {
             <div>
                 {product.title}
             </div>
-            <div>
-                ${product.price}
+           <div className="flex gap-6">
+                <div className="line-through">${product.price}</div>
+                <div className="text-green-500">${(product.price - (product.price * (product.discountPercentage/100))).toFixed(2)}</div>
+                <div className="text-red-500">{product.discountPercentage}% off</div>
             </div>
         </Link>
         </>

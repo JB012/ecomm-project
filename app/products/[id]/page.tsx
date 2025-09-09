@@ -1,21 +1,37 @@
 "use client"
 import Image from "next/image"
 import Icon from "@mdi/react"
-import { mdiPlus, mdiStar } from "@mdi/js"
+import { mdiArrowLeft, mdiPlus, mdiStar } from "@mdi/js"
 import { use, useEffect, useState } from "react"
 import Review from "../../components/Review"
 import Link from "next/link"
 import { ProductObject } from "../../types/ProductObject"
-import { useSearchParams } from "next/navigation"
-
+import { useRouter } from "next/navigation"
 
 let reviewKey = 0;
 
+function sortByDate(a: string, b: string) : number {
+    const firstDate = new Date(a);
+    const secondDate = new Date(b);
+
+    if (firstDate < secondDate) {
+        return -1;
+    }
+    else if (firstDate > secondDate) {
+        return 1;
+    }
+
+    return 0;
+}
+
 export default function Products({params}: {params: Promise<{ id: string }>}) {
+    const router = useRouter();
     const {id} = use(params);
     const [viewProductInfo, setViewProductInfo] = useState(true);
     const [viewShippingInfo, setViewShippingInfo] = useState(true);
     const [product, setProduct] = useState({} as ProductObject)
+    const [currentImage, setCurrentImage] = useState("");
+    const [reviewSort, setReviewSort] = useState("Recent");
 
     useEffect(() => {
         const data = localStorage.getItem('products');
@@ -25,6 +41,7 @@ export default function Products({params}: {params: Promise<{ id: string }>}) {
 
             if (findProduct !== undefined) {
                 setProduct(findProduct);
+                setCurrentImage(findProduct.images[0]);
             }
         }
     }, [id]);
@@ -35,16 +52,20 @@ export default function Products({params}: {params: Promise<{ id: string }>}) {
             Object.keys(product).length !== 0 &&
             <div className="flex flex-col w-full h-full px-6">
                 <div className="flex gap-1.5 py-4">
-                    <Link href="/">Home</Link>
-                    <div>/</div>
-                    <Link href="/">{product.title}</Link>
+                    <div className="flex cursor-pointer gap-2" onClick={() => router.back()}>
+                        <Icon path={mdiArrowLeft} size={1} />
+                        Go Back
+                    </div>
                 </div>
                 <div className="flex w-full gap-12 justify-center pb-14">
                     <div className="flex flex-1 h-[365px] w-[480px] flex-col">
-                        <Image src={product.images[0]} alt="Product Image" height={0} width={0} sizes="100vw" style={{height: '100%', width: '100%', objectFit: 'cover'}} />
+                        <Image className="cursor-pointer" src={currentImage} alt="Product Image" height={0} width={0} sizes="100vw" style={{height: '100%', width: '100%', objectFit: 'cover'}} />
 
                         <div className="flex h-[50px] w-[50px]">
-                            {product.images.slice(1).map((url) => <Image key={url} src={url} alt={'Image of ' + product.title} height={0} width={0} sizes="100vw" style={{height: '100%', width: '100%', objectFit: 'cover'}} />)}
+                            {product.images.map((url) => { 
+                                if (url !== currentImage) { 
+                                return <Image className='cursor-pointer' key={url} src={url} alt={'Image of ' + product.title} onClick={() => setCurrentImage(url)} height={0} width={0} sizes="100vw" style={{height: '100%', width: '100%', objectFit: 'cover'}} 
+                                />}})}
                         </div>
                     </div>
                     <div className="flex flex-2 flex-col gap-2">
@@ -54,7 +75,7 @@ export default function Products({params}: {params: Promise<{ id: string }>}) {
                         <div className="flex gap-5">
                             <div className="line-through">${product.price}</div>
                             <div className="text-green-500">${(product.price - (product.price * (product.discountPercentage/100))).toFixed(2)}</div>
-                            <div className="text-red-500">{Math.floor(product.discountPercentage)}% off</div>
+                            <div className="text-red-500">{product.discountPercentage}% off</div>
                         </div>
                         <div className="flex gap-5">
                             <div className="flex">
@@ -85,7 +106,7 @@ export default function Products({params}: {params: Promise<{ id: string }>}) {
                                 <div className="flex flex-col py-2">
                                     <div>Brand: {product.brand}</div>
                                     <div>Dimension: {product.dimensions.width}W {product.dimensions.height}H {product.dimensions.depth}D</div>
-                                    <div>Weight: {product.weight}</div>
+                                    <div>Weight: {product.weight} lbs</div>
                                     <div>Category: {product.category}</div>
                                 </div>
                                 : <div></div>
@@ -113,14 +134,18 @@ export default function Products({params}: {params: Promise<{ id: string }>}) {
                     <div className="text-2xl">Reviews</div>
                     <div className="flex">
                         <div>Sort By:</div>
-                        <select>
-                            <option>Recent</option>
-                            <option>Stars</option>
+                        <select value={reviewSort} onChange={(e) => setReviewSort(e.target.value)}>
+                            <>        
+                                <option value={"Recent"}>Recent</option>
+                                <option value={"Stars"}>Stars</option>
+                            </>
+                
                         </select>
                     </div>
                 </div>
                 <div>
-                    {product.reviews.map((review) => <Review key={reviewKey++} review={review}/>)}
+                    {reviewSort === "Stars" && product.reviews.sort((a, b) => a.rating - b.rating).map((review) => <Review key={reviewKey++} review={review}/>)}
+                    {reviewSort === "Recent" && product.reviews.sort((a, b) => sortByDate(a.date, b.date)).map((review) => <Review key={reviewKey++} review={review}/>)}
                 </div>
             </div>
         }
