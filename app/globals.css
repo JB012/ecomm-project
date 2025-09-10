@@ -66,3 +66,11 @@ fieldset {
   border: 1px solid black;
   padding: 0 10px 0 10px;
 }
+
+button, li {
+  cursor: pointer;
+}
+
+.popup {
+  background-color: white !important;
+}

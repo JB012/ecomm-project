@@ -5,6 +5,7 @@ import { mdiArrowLeft, mdiPlus, mdiStar } from "@mdi/js"
 import { use, useEffect, useState } from "react"
 import Review from "../../components/Review"
 import Link from "next/link"
+import '../../globals.css';
 import { ProductObject } from "../../types/ProductObject"
 import { useRouter } from "next/navigation"
 
@@ -24,14 +25,79 @@ function sortByDate(a: string, b: string) : number {
     return 0;
 }
 
+
 export default function Products({params}: {params: Promise<{ id: string }>}) {
     const router = useRouter();
     const {id} = use(params);
     const [viewProductInfo, setViewProductInfo] = useState(true);
     const [viewShippingInfo, setViewShippingInfo] = useState(true);
-    const [product, setProduct] = useState({} as ProductObject)
+    const [shoppingOption, setShoppingOption] = useState(false);
+    const [product, setProduct] = useState({} as ProductObject);
+    const [stockSelected, setStockSelected] = useState("1");
     const [currentImage, setCurrentImage] = useState("");
     const [reviewSort, setReviewSort] = useState("Recent");
+
+    function getDiscountedPrice(product : ProductObject) : number {
+        return (product.price - (product.price * (product.discountPercentage/100)));
+    }
+
+    function CartPopup() {
+        return (
+            <div className="flex w-full !opacity-100 absolute">
+                <div className={`flex flex-col absolute top-25 left-105 w-170 h-45 p-1 ${shoppingOption ? "popup" : ""}`}>
+                    <div>
+                        Added to Cart
+                    </div>
+                    <div className="flex justify-between">
+                        <div className="flex">
+                            <Image src={product.images[0]} alt="Product Image" width={100} height={180} />
+                            <div className="flex gap-4">
+                                <div>{product.title}</div>
+                                <div>x{stockSelected}</div>
+                            </div>
+                        </div>
+                        <div className="flex flex-col">
+                            <div className="flex gap-4">
+                                <div className="line-through">${product.price}</div>
+                                <div className="text-green-500">${getDiscountedPrice(product).toFixed(2)}</div>
+                            </div>
+                            <div className="self-center text-red-500">{product.discountPercentage}% off</div>
+                        </div>
+                    </div>
+                    <hr></hr>
+                    <div className="flex justify-between pt-3">
+                        <button onClick={() => setShoppingOption(false)}>Keep Shopping</button>
+                        <Link href={"/checkout"}><button>Checkout</button></Link>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+    
+    function handleCartClick() {
+        const cart = localStorage.getItem('cart');
+
+        if (cart === null) {
+            localStorage.setItem("cart", JSON.stringify([{product: product, quantity: Number(stockSelected)}]));
+        }
+        else {
+            const productsInCart = JSON.parse(cart);
+
+            const cartItemIndex = productsInCart.findIndex((item: {product: ProductObject, quantity: number}) => item.product.id === product.id);
+
+            if (cartItemIndex !== -1 ) { 
+                productsInCart[cartItemIndex].quantity += 1;
+            }
+            else {
+                productsInCart.push({product: product, quantity: Number(stockSelected)});
+            }
+            
+            localStorage.setItem("cart", JSON.stringify(productsInCart));
+        }
+
+        setShoppingOption(true);
+
+    }
 
     useEffect(() => {
         const data = localStorage.getItem('products');
@@ -50,7 +116,7 @@ export default function Products({params}: {params: Promise<{ id: string }>}) {
         <>
         {
             Object.keys(product).length !== 0 &&
-            <div className="flex flex-col w-full h-full px-6">
+            <div className="flex flex-col w-full h-full px-6" style={shoppingOption === true ? {backgroundColor: 'rgba(0,0,0,0.5)'} : {opacity: '100%'}}>
                 <div className="flex gap-1.5 py-4">
                     <div className="flex cursor-pointer gap-2" onClick={() => router.back()}>
                         <Icon path={mdiArrowLeft} size={1} />
@@ -86,10 +152,10 @@ export default function Products({params}: {params: Promise<{ id: string }>}) {
                         <div className="flex gap-8.5 pb-4">
                             <div>In Stock - {product.stock} Left</div>
                             <div className="flex justify-center gap-4">
-                                <select>
-                                    {[...Array(product.minimumOrderQuantity)].map((elem,index) =>{if (index !== 0 && index <= product.stock) { return (<option key={index}>{index}</option>)} })}
+                                <select value={stockSelected} onChange={(e) => setStockSelected(e.target.value)}>
+                                    {[...Array(product.minimumOrderQuantity)].map((elem,index) =>{if (index !== 0 && index <= product.stock) { return (<option value={index} key={index}>{index}</option>)} })}
                                 </select>
-                                <button>Add to Cart</button>
+                                <button className="cursor-pointer" onClick={() => handleCartClick()}>Add to Cart</button>
                             </div>
                         </div>
                         <div className="py-4">
@@ -129,6 +195,7 @@ export default function Products({params}: {params: Promise<{ id: string }>}) {
                             }
                         </div>
                     </div>
+                    {shoppingOption && <CartPopup />}
                 </div>
                 <div className="flex justify-between py-2.5 items-center">
                     <div className="text-2xl">Reviews</div>
