@@ -8,7 +8,7 @@ import Link from "next/link"
 import '../../globals.css';
 import { ProductObject } from "../../types/ProductObject"
 import { useRouter } from "next/navigation"
-
+import { getDiscountedPrice } from "@/app/utils"
 let reviewKey = 0;
 
 function sortByDate(a: string, b: string) : number {
@@ -36,10 +36,6 @@ export default function Products({params}: {params: Promise<{ id: string }>}) {
     const [stockSelected, setStockSelected] = useState("1");
     const [currentImage, setCurrentImage] = useState("");
     const [reviewSort, setReviewSort] = useState("Recent");
-
-    function getDiscountedPrice(product : ProductObject) : number {
-        return (product.price - (product.price * (product.discountPercentage/100)));
-    }
 
     function CartPopup() {
         return (

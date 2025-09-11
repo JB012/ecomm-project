@@ -6,7 +6,7 @@ import ProductItem from "../components/ProductItem";
 import { useSearchParams } from "next/navigation";
 import { ProductObject } from "../types/ProductObject";
 import Link from "next/link";
-
+import { getDiscountedPrice } from "../utils";
 
 function getMostExpensiveProduct(products: ProductObject[]) : number {
     return products.reduce((acc, product) => acc < (product.price - (product.price * (product.discountPercentage/100))) && 
@@ -20,10 +20,6 @@ function acceptableCategories(product: ProductObject) : boolean {
     }
 
     return false;
-}
-
-function getDiscountedPrice(product : ProductObject) : number {
-    return (product.price - (product.price * (product.discountPercentage/100)));
 }
 
 interface CategoryTitle {
