@@ -1,6 +1,19 @@
+"use client"
+import { useEffect, useState } from "react";
 import CartItem from "../components/CartItem";
+import { ProductObject } from "../types/ProductObject";
+import { getDiscountedPrice } from "../utils";
 
 export default function Checkout() {
+    const [cartItems, setCartItems] = useState(Array<{product: ProductObject, quantity: number}>)
+    
+    useEffect(() => {
+        const cart = localStorage.getItem("cart");
+        if (cart) {
+            setCartItems(JSON.parse(cart));
+        }
+    }, []);
+
     return (
         <form className="flex flex-col w-full px-3">
             <div className="text-3xl py-4">Checkout</div>
@@ -20,8 +33,9 @@ export default function Checkout() {
                     <fieldset>
                         <legend className="text-2xl">Your Order</legend>
                         <div className="flex flex-col">
-                            <CartItem />
-                            <CartItem />
+                            {
+                                cartItems.map((cartItem) => <CartItem />)
+                            }
                         </div>
                     </fieldset>
                 </div>    

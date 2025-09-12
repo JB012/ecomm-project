@@ -50,7 +50,7 @@ export default function Cart() {
         <div className="flex flex-col px-4 py-4 w-full h-full">
             <div className="text-3xl">Cart</div>
             <div className="flex py-3 justify-end">
-                <Link href='/checkout'><button>Checkout</button></Link>
+                {cartItems.length > 0 ? <Link href='/checkout'><button>Checkout</button></Link> : <button className="!bg-gray-400 text-gray-300">Checkout</button>}
             </div>
             <div className="flex justify-between">
                 <div>Items</div>
@@ -64,7 +64,7 @@ export default function Cart() {
             <div className="items-end">
                 <hr></hr>
                 <div className="flex pt-4 justify-end">
-                    Total ({cartItems.length} Item): ${cartItems.reduce((acc, item) => acc + getDiscountedPrice(item.product), 0).toFixed(2)}
+                    Total ({cartItems.length} Items): ${cartItems.reduce((acc, item) => acc + getDiscountedPrice(item.product), 0).toFixed(2)}
                 </div>
             </div>
         </div>
