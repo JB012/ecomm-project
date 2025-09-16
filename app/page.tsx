@@ -12,13 +12,7 @@ export default function Home() {
 
   const [products, setProducts] = useState(Array<ProductObject>);
   useEffect(() => {
-    const data = localStorage.getItem('products');
-    if (data === null) {
-      fetch('https://dummyjson.com/products?limit=0').then(res => res.json()).then(data => {localStorage.setItem('products',JSON.stringify(data['products'])); setProducts(data['products']);});
-    }
-    else {
-      setProducts(JSON.parse(data));
-    }
+    fetch("api/products").then(res => res.json()).then(data => setProducts(data.products));
   }, []);
 
   return (

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import CartItem from "../components/CartItem";
 import { ProductObject } from "../types/ProductObject";
 import { getDiscountedPrice } from "../utils";
+import CheckoutItem from "../components/CheckoutItem";
 
 export default function Checkout() {
     const [cartItems, setCartItems] = useState(Array<{product: ProductObject, quantity: number}>)
@@ -23,18 +24,18 @@ export default function Checkout() {
                         <legend className="text-2xl">Your Information</legend>
                         <div className="flex flex-col w-72">
                             <div>Name</div>
-                            <input name="full_name"/>
+                            <input className="bg-gray-100 outline outline-black" name="full_name"/>
                         </div>
                         <div className="flex flex-col w-72">
                             <div>Email</div>
-                            <input name="email" type="email" />
+                            <input className="bg-gray-100 outline outline-black" name="email" type="email" />
                         </div>
                     </fieldset>
                     <fieldset>
                         <legend className="text-2xl">Your Order</legend>
                         <div className="flex flex-col">
                             {
-                                cartItems.map((cartItem) => <CartItem />)
+                                cartItems.map((cartItem) => <CheckoutItem key={cartItem.product.id} product={cartItem.product} quantity={cartItem.quantity} />)
                             }
                         </div>
                     </fieldset>
@@ -45,7 +46,7 @@ export default function Checkout() {
                     <div>After confirming the order, a receipt will be sent to the corresponding email</div>
                     <div className="flex justify-between">
                         <div>Total Cost:</div>
-                        <div>$0.00</div>
+                        <div>${cartItems.reduce((acc, item) => acc + getDiscountedPrice(item.product), 0).toFixed(2)}</div>
                     </div>
                 </fieldset>
             </div>

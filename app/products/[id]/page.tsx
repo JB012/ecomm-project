@@ -9,6 +9,8 @@ import '../../globals.css';
 import { ProductObject } from "../../types/ProductObject"
 import { useRouter } from "next/navigation"
 import { getDiscountedPrice } from "@/app/utils"
+import { getCart } from "@/app/lib/data"
+
 let reviewKey = 0;
 
 function sortByDate(a: string, b: string) : number {
@@ -71,8 +73,8 @@ export default function Products({params}: {params: Promise<{ id: string }>}) {
     }
     
     function handleCartClick() {
-        const cart = localStorage.getItem('cart');
-
+        getCart(product, stockSelected);
+/* 
         if (cart === null) {
             localStorage.setItem("cart", JSON.stringify([{product: product, quantity: Number(stockSelected)}]));
         }
@@ -89,23 +91,22 @@ export default function Products({params}: {params: Promise<{ id: string }>}) {
             }
             
             localStorage.setItem("cart", JSON.stringify(productsInCart));
-        }
+        } */
 
         setShoppingOption(true);
 
     }
 
     useEffect(() => {
-        const data = localStorage.getItem('products');
-        if (typeof data === 'string') {
-            const allProducts = JSON.parse(data) as Array<ProductObject>;
-            const findProduct = allProducts.find((product) => product.id.toString() === id);  
+        fetch(`${window.location.origin}/api/products`).then(res => res.json()).then(data => {
+            const findProduct = data.products.find((product : ProductObject) => product.id.toString() === id);
 
             if (findProduct !== undefined) {
                 setProduct(findProduct);
                 setCurrentImage(findProduct.images[0]);
+                console.log(findProduct);
             }
-        }
+        });
     }, [id]);
 
     return(
@@ -124,10 +125,7 @@ export default function Products({params}: {params: Promise<{ id: string }>}) {
                         <Image className="cursor-pointer" src={currentImage} alt="Product Image" height={0} width={0} sizes="100vw" style={{height: '100%', width: '100%', objectFit: 'cover'}} />
 
                         <div className="flex h-[50px] w-[50px]">
-                            {product.images.map((url) => { 
-                                if (url !== currentImage) { 
-                                return <Image className='cursor-pointer' key={url} src={url} alt={'Image of ' + product.title} onClick={() => setCurrentImage(url)} height={0} width={0} sizes="100vw" style={{height: '100%', width: '100%', objectFit: 'cover'}} 
-                                />}})}
+                            {product.images.map((url) => <Image className='cursor-pointer' key={url} src={url} alt={'Image of ' + product.title} onClick={() => setCurrentImage(url)} height={0} width={0} sizes="100vw" style={{height: '100%', width: '100%', objectFit: 'cover'}} />)}
                         </div>
                     </div>
                     <div className="flex flex-2 flex-col gap-2">

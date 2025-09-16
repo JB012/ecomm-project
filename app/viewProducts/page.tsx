@@ -112,6 +112,8 @@ export default function ViewProducts() {
                                         <option value={'desc_name'}>Name (Z-A)</option>
                                         <option value={'asc_price'}>Price (Low to High)</option>
                                         <option value={'desc_price'}>Price (High to Low)</option>
+                                        <option value={'best_sellers'}>Best Sellers</option>
+                                        <option value={'highest_discount'}>Highest Discount</option>
                                     </select>
                                 </div>
                             </div>
@@ -127,6 +129,12 @@ export default function ViewProducts() {
                                 }
                                 {
                                     sortProducts === "desc_price" && products.sort((a, b) => getDiscountedPrice(b) - getDiscountedPrice(a)).map(product => {if (getDiscountedPrice(product) <= Number(sliderValue)) {return <ProductItem key={product.id} product={product} />}})
+                                }
+                                {
+                                    sortProducts === "best_sellers" && products.sort((a, b) => a.rating - b.rating).map(product => {if (getDiscountedPrice(product) <= Number(sliderValue)) {return <ProductItem key={product.id} product={product} />}})
+                                }
+                                {
+                                    sortProducts === "highest_discount" && products.sort((a, b) => a.discountPercentage - b.discountPercentage).map(product => {if (getDiscountedPrice(product) <= Number(sliderValue)) {return <ProductItem key={product.id} product={product} />}})
                                 }
                             </div>
                         </div>
