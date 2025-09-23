@@ -31,7 +31,7 @@ export async function GET() {
         });
             
         await conn.end();
-        return NextResponse.json({message: cart}, {status: 200});
+        return NextResponse.json({cart: cart}, {status: 200});
         }
     }
     catch(e) {

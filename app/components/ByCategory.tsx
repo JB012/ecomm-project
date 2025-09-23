@@ -10,35 +10,35 @@ export default function ByCategory() {
             </div>
             <div className="flex w-full justify-center">
                 <div className="grid gap-8 grid-flow-col grid-rows-2 pb-10">
-                        <Link href={'/viewProducts?category=beauty'} className="flex flex-col justify-center items-center">
+                        <Link href={'/viewProducts?category=beauty&sort=asc_name'} className="flex flex-col justify-center items-center">
                             <Image className="container-image" src={"/beauty.jpeg"} alt="Category photo" width={280} height={300}/>
                             <div className="container-text">Beauty</div>
                         </Link>
-                        <Link href={'/viewProducts?category=furniture'} className="flex flex-col justify-center items-center">
+                        <Link href={'/viewProducts?category=furniture&sort=asc_name'} className="flex flex-col justify-center items-center">
                             <Image className="container-image" src={"/furniture.jpg"} alt="Category photo" width={280} height={300}/>
                             <div className="container-text">Furniture</div>
                         </Link>
-                        <Link href={'/viewProducts?category=home-decoration'} className="flex flex-col justify-center items-center">
+                        <Link href={'/viewProducts?category=home-decoration&sort=asc_name'} className="flex flex-col justify-center items-center">
                             <Image className="container-image" src={"/decorations.jpg"} alt="Category photo" width={280} height={300}/>
                             <div className="container-text">Home Decorations</div>
                         </Link>
-                        <Link href={'/viewProducts?category=kitchen-accessories'} className="flex flex-col justify-center items-center">
+                        <Link href={'/viewProducts?category=kitchen-accessories&sort=asc_name'} className="flex flex-col justify-center items-center">
                             <Image className="container-image" src={"/kitchen_accessories.jpg"} alt="Category photo" width={280} height={300}/>
                             <div className="container-text">Kitchen Accessories</div>
                         </Link>
-                        <Link href={'/viewProducts?category=mens-shirts'} className="flex flex-col justify-center items-center">
+                        <Link href={'/viewProducts?category=mens-shirts&sort=asc_name'} className="flex flex-col justify-center items-center">
                             <Image className="container-image" src={"/mens.jpg"} alt="Category photo" width={280} height={300}/>
                             <div className="container-text">Men&apos;s</div>
                         </Link>
-                        <Link href={'/viewProducts?category=groceries'} className="flex flex-col justify-center items-center">
+                        <Link href={'/viewProducts?category=groceries&sort=asc_name'} className="flex flex-col justify-center items-center">
                             <Image className="container-image" src={"/groceries.jpg"} alt="Category photo" width={280} height={300}/>
                             <div className="container-text">Groceries</div>
                         </Link>
-                        <Link href={'/viewProducts?category=womens-shoes'} className="flex flex-col justify-center items-center">
+                        <Link href={'/viewProducts?category=womens-shoes&sort=asc_name'} className="flex flex-col justify-center items-center">
                             <Image className="container-image" src={"/womens.jpg"} alt="Category photo" width={280} height={300}/>
                             <div className="container-text">Women&apos;s</div>
                         </Link>
-                        <Link href={'/viewProducts?category=fragrances'} className="flex flex-col justify-center items-center">
+                        <Link href={'/viewProducts?category=fragrances&sort=asc_name'} className="flex flex-col justify-center items-center">
                             <Image className="container-image" src={"/fragrances.jpg"} alt="Category photo" width={280} height={300}/>
                             <div className="container-text">Fragrances</div>
                         </Link>

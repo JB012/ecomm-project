@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { ProductObject } from "../types/ProductObject";
 import Link from "next/link";
 import { getDiscountedPrice } from "../utils";
+import { useRouter } from "next/navigation";
 
 function getMostExpensiveProduct(products: ProductObject[]) : number {
     return products.reduce((acc, product) => acc < (product.price - (product.price * (product.discountPercentage/100))) && 
@@ -29,30 +30,36 @@ interface CategoryTitle {
 export default function ViewProducts() {
     const searchParams = useSearchParams();
     const category = searchParams.get('category');
-
+    const sort = searchParams.get('sort');
+    const router = useRouter();
     const [products, setProducts] = useState(Array<ProductObject>);
-    const [sortProducts, setSortProducts] = useState("asc_name");
+    const [sortProducts, setSortProducts] = useState(sort);
     const [sliderValue, setSliderValue] = useState('100');
 
     const title : CategoryTitle = {"all": "Shop All", "beauty": "Beauty", "fragrances": "Fragrances", "furniture": "Furniture", "groceries": "Groceries",
         "home-decoration": "Home Decorations", "kitchen-accessories": "Kitchen Accessories", "mens-shirts": "Men's Shirts", "womens-shoes": "Women's Shoes"};
     
-    useEffect(() => {
-        const data = localStorage.getItem('products');
-        if (typeof data === "string") {
-            const allProducts = (JSON.parse(data) as Array<ProductObject>).filter(product => acceptableCategories(product));
-            
-            if (category === "all") {
-                setProducts(allProducts);
-            }
-            else {
-                const filteredData = allProducts.filter(product => product.category === category);
-                setProducts(filteredData);
-            }
 
-            const mostExpensivePrice = getMostExpensiveProduct(allProducts);
-            setSliderValue(Math.ceil(mostExpensivePrice).toString());
+    function changeURL(sortValue: string) {
+        router.replace(`viewProducts?category=${category}&sort=${sortValue}`);
+    }
+
+    useEffect(() => {
+       fetch(`${window.location.origin}/api/products`).then(res => res.json()).then(data => {
+        const products = data.products.filter((product : ProductObject) => acceptableCategories(product));
+        
+        if (category === "all") {
+            setProducts(products);
         }
+        else {
+            const filteredData = products.filter((product : ProductObject) => product.category === category);
+            setProducts(filteredData);
+        }
+
+        const mostExpensivePrice = getMostExpensiveProduct(products);
+        setSliderValue(Math.ceil(mostExpensivePrice).toString());
+        setSortProducts(sort);
+       });
     }, [category]);
 
     return (
@@ -70,15 +77,15 @@ export default function ViewProducts() {
                                     <div className="text-2xl pb-2">Browse By</div>
                                     <hr className="py-2"></hr>
                                     <ul className="flex flex-col text-sm gap-1">
-                                        <li><Link href={"/viewProducts?category=all"}>All Products</Link></li>
-                                        <li><Link href={"viewProducts?category=beauty"}>Beauty</Link></li>
-                                        <li><Link href={"viewProducts?category=fragrances"}>Fragrances</Link></li>
-                                        <li><Link href={"viewProducts?category=furniture"}>Furniture</Link></li>
-                                        <li><Link href={"viewProducts?category=groceries"}>Groceries</Link></li>
-                                        <li><Link href={"viewProducts?category=kitchen-accessories"}>Kitchen Accessories</Link></li>
-                                        <li><Link href={"viewProducts?category=home-decoration"}>Home Decorations</Link></li>
-                                        <li><Link href={"viewProducts?category=womens-shoes"}>Women&apos;s Shoes</Link></li>
-                                        <li><Link href={"viewProducts?category=mens-shirts"}>Men&apos;s Shirts</Link></li>
+                                        <li><Link href={"/viewProducts?category=all&sort=asc_name"}>All Products</Link></li>
+                                        <li><Link href={"viewProducts?category=beauty&sort=asc_name"}>Beauty</Link></li>
+                                        <li><Link href={"viewProducts?category=fragrances&sort=asc_name"}>Fragrances</Link></li>
+                                        <li><Link href={"viewProducts?category=furniture&sort=asc_name"}>Furniture</Link></li>
+                                        <li><Link href={"viewProducts?category=groceries&sort=asc_name"}>Groceries</Link></li>
+                                        <li><Link href={"viewProducts?category=kitchen-accessories&sort=asc_name"}>Kitchen Accessories</Link></li>
+                                        <li><Link href={"viewProducts?category=home-decoration&sort=asc_name"}>Home Decorations</Link></li>
+                                        <li><Link href={"viewProducts?category=womens-shoes&sort=asc_name"}>Women&apos;s Shoes</Link></li>
+                                        <li><Link href={"viewProducts?category=mens-shirts&sort=asc_name"}>Men&apos;s Shirts</Link></li>
                                     </ul>
                                 </div>
                                 <div className="flex flex-col">
@@ -107,7 +114,7 @@ export default function ViewProducts() {
                                 <div>{products.length} products</div>
                                 <div className="flex">
                                     <div>Sort By:</div>    
-                                    <select value={sortProducts} onChange={(e) => setSortProducts(e.target.value)} name="sort_options">
+                                    <select value={sortProducts!} onChange={(e) => {setSortProducts(e.target.value); changeURL(e.target.value)}} name="sort_options">
                                         <option value={'asc_name'}>Name (A-Z)</option>
                                         <option value={'desc_name'}>Name (Z-A)</option>
                                         <option value={'asc_price'}>Price (Low to High)</option>
@@ -131,10 +138,10 @@ export default function ViewProducts() {
                                     sortProducts === "desc_price" && products.sort((a, b) => getDiscountedPrice(b) - getDiscountedPrice(a)).map(product => {if (getDiscountedPrice(product) <= Number(sliderValue)) {return <ProductItem key={product.id} product={product} />}})
                                 }
                                 {
-                                    sortProducts === "best_sellers" && products.sort((a, b) => a.rating - b.rating).map(product => {if (getDiscountedPrice(product) <= Number(sliderValue)) {return <ProductItem key={product.id} product={product} />}})
+                                    sortProducts === "best_sellers" && products.sort((a, b) => b.rating - a.rating).map(product => {if (getDiscountedPrice(product) <= Number(sliderValue)) {return <ProductItem key={product.id} product={product} />}})
                                 }
                                 {
-                                    sortProducts === "highest_discount" && products.sort((a, b) => a.discountPercentage - b.discountPercentage).map(product => {if (getDiscountedPrice(product) <= Number(sliderValue)) {return <ProductItem key={product.id} product={product} />}})
+                                    sortProducts === "highest_discount" && products.sort((a, b) => b.discountPercentage - a.discountPercentage).map(product => {if (getDiscountedPrice(product) <= Number(sliderValue)) {return <ProductItem key={product.id} product={product} />}})
                                 }
                             </div>
                         </div>

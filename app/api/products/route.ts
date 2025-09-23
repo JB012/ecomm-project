@@ -1,7 +1,6 @@
 import { ProductObject } from '@/app/types/ProductObject';
 import { NextResponse } from 'next/server';
-import mysql, { ConnectionOptions, ResultSetHeader, QueryResult, Query, RowDataPacket } from 'mysql2/promise';
-import Error from 'next/error';
+import mysql, { ConnectionOptions, RowDataPacket } from 'mysql2/promise';
 
 interface Product extends RowDataPacket {
   productItem: string,
@@ -27,7 +26,7 @@ export async function GET() {
     try {
       for (const product of products) {
         const sql = 'INSERT INTO products (productID, productName, productItem) VALUES (?, ?, ?)';
-        const execute = [product.id, product.title, product]
+        const execute = [product.id, product.title, JSON.stringify(product)]
         await conn.execute(sql, execute);
       }
     }
@@ -49,21 +48,3 @@ export async function GET() {
     return NextResponse.json({message: "Products are already added to the database", products: allProducts}, {status: 200});
   }
 }
-
-/* conn.query('SELECT * FROM products', async (_err, rows) => {
-  if (rows === undefined) {
-    const products : Array<ProductObject> = (await (await fetch('https://dummyjson.com/products?limit=0')).json())["products"];
-    
-    try {
-      for (const product of products) {
-        const sql = 'INSERT INTO products (productID, productName, productItem) VALUES (?, ?)';
-        const execute = [product.id, product.title, product]
-        const result : Query = conn.execute(sql, execute);
-        console.log(result);
-      }
-    }
-    catch(e) {
-      console.log(`Error inserting product: ${e}`);
-    }
-  }
-}); */

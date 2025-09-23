@@ -9,10 +9,11 @@ export default function Checkout() {
     const [cartItems, setCartItems] = useState(Array<{product: ProductObject, quantity: number}>)
     
     useEffect(() => {
-        const cart = localStorage.getItem("cart");
-        if (cart) {
-            setCartItems(JSON.parse(cart));
-        }
+        fetch(`${window.location.origin}/api/cart`).then(res => res.json()).then(data => {
+            if (data.cart !== null) {
+                setCartItems(data.cart);
+            }
+        });
     }, []);
 
     return (

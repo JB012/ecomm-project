@@ -4,6 +4,7 @@ import CartItem from "../components/CartItem"
 import Link from "next/link"
 import { ProductObject } from "../types/ProductObject";
 import { getDiscountedPrice } from "../utils";
+import { addCartItem , subtractCartItem, getCart} from "../lib/data";
 
 let key = 0;
 
@@ -11,28 +12,22 @@ export default function Cart() {
     const [cartItems, setCartItems] = useState(Array<{product: ProductObject, quantity: number}>);
 
     useEffect(() => {
-        const cart = localStorage.getItem("cart");
-        if (cart !== null) {
-            setCartItems(JSON.parse(cart));        
+    fetch(`${window.location.origin}/api/cart`).then(res => res.json()).then(data => {
+        if (data.cart !== null) {
+            setCartItems(data.cart);
         }
+    });
     }, []);
+
     
-    function subtractQuantityFromCart(productID : number) {
+    async function subtractQuantityFromCart(productID : number) {
         const productIndex = cartItems.findIndex((item) => item.product.id === productID);
 
         if (productIndex !== -1) {
-            if (cartItems[productIndex].quantity > 1) {
-                cartItems[productIndex].quantity -= 1;
+            cartItems[productIndex].quantity -= 1;
+            subtractCartItem(cartItems[productIndex].product, cartItems[productIndex].quantity);
 
-                localStorage.setItem("cart", JSON.stringify(cartItems));
-                setCartItems(cartItems);
-            }
-            else {
-                const filteredCart = cartItems.filter((item) => item.product.id !== productID);
-            
-                localStorage.setItem("cart", JSON.stringify(filteredCart));
-                setCartItems(filteredCart);
-            }  
+            setCartItems(await getCart());
         }
     }
 
@@ -40,9 +35,8 @@ export default function Cart() {
         const productIndex = cartItems.findIndex((item) => item.product.id === productID);
         if (productIndex !== -1) {
             cartItems[productIndex].quantity += 1;
-
-            localStorage.setItem("cart", JSON.stringify(cartItems));
-            setCartItems(cartItems);
+            
+            addCartItem(cartItems[productIndex].product, cartItems[productIndex].quantity);
         }
     }
 

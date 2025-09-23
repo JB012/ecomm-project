@@ -9,7 +9,7 @@ import '../../globals.css';
 import { ProductObject } from "../../types/ProductObject"
 import { useRouter } from "next/navigation"
 import { getDiscountedPrice } from "@/app/utils"
-import { getCart } from "@/app/lib/data"
+import { addCartItem } from "@/app/lib/data"
 
 let reviewKey = 0;
 
@@ -73,28 +73,8 @@ export default function Products({params}: {params: Promise<{ id: string }>}) {
     }
     
     function handleCartClick() {
-        getCart(product, stockSelected);
-/* 
-        if (cart === null) {
-            localStorage.setItem("cart", JSON.stringify([{product: product, quantity: Number(stockSelected)}]));
-        }
-        else {
-            const productsInCart = JSON.parse(cart);
-
-            const cartItemIndex = productsInCart.findIndex((item: {product: ProductObject, quantity: number}) => item.product.id === product.id);
-
-            if (cartItemIndex !== -1 ) { 
-                productsInCart[cartItemIndex].quantity += 1;
-            }
-            else {
-                productsInCart.push({product: product, quantity: Number(stockSelected)});
-            }
-            
-            localStorage.setItem("cart", JSON.stringify(productsInCart));
-        } */
-
+        addCartItem(product, Number(stockSelected));
         setShoppingOption(true);
-
     }
 
     useEffect(() => {
@@ -149,7 +129,7 @@ export default function Products({params}: {params: Promise<{ id: string }>}) {
                                 <select value={stockSelected} onChange={(e) => setStockSelected(e.target.value)}>
                                     {[...Array(product.minimumOrderQuantity)].map((elem,index) =>{if (index !== 0 && index <= product.stock) { return (<option value={index} key={index}>{index}</option>)} })}
                                 </select>
-                                <button className="cursor-pointer" onClick={() => handleCartClick()}>Add to Cart</button>
+                                <button className="add-item-button cursor-pointer" onClick={() => handleCartClick()}>Add to Cart</button>
                             </div>
                         </div>
                         <div className="py-4">

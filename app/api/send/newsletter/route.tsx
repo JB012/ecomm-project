@@ -1,14 +1,13 @@
-import { ProductObject } from "./types/ProductObject";
+import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
-export function getDiscountedPrice(product : ProductObject) : number {
-    return (product.price - (product.price * (product.discountPercentage/100)));
-}
+export async function POST(req: Request) {
+    const res = await req.json();
+    const content = "Thank you for subscribing to the BuyMyStuff Newsletter! You'll receive daily deals, notifications on low-stock orders, and news on the latest and popular items!";
 
-export async function sendEmail({from, to, subject, body} : {from : string, to : string, subject: string, body : string}) {
     const email = process.env.SMTP_EMAIL;
     const password = process.env.SMTP_PASSWORD;
-
+    
     const transport = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -27,15 +26,16 @@ export async function sendEmail({from, to, subject, body} : {from : string, to :
 
     try {
         const sendResult = await transport.sendMail({
-            from: from,
-            to: to,
-            subject: subject,
-            html: body
+            from: email,
+            to: res.email,
+            subject: "BuyMyStuff Newsletter Subscription",
+            html: content
         });
         
         console.log(sendResult);
+        return NextResponse.json({response: sendResult});
     }
     catch(e) {
-        console.log(e);
+        return NextResponse.json({error: e});
     }
 }

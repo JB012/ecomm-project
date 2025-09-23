@@ -4,6 +4,8 @@ import "./globals.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import NewsLetter from "./components/NewsLetter";
+import Head from "next/head";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,6 +29,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      
+      <Script type="text/typescript" src="/static/main.ts" defer></Script>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Header />
