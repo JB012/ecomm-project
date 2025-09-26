@@ -1,41 +1,5 @@
 import { ProductObject } from "./types/ProductObject";
-import nodemailer from "nodemailer";
 
 export function getDiscountedPrice(product : ProductObject) : number {
     return (product.price - (product.price * (product.discountPercentage/100)));
-}
-
-export async function sendEmail({from, to, subject, body} : {from : string, to : string, subject: string, body : string}) {
-    const email = process.env.SMTP_EMAIL;
-    const password = process.env.SMTP_PASSWORD;
-
-    const transport = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: email,
-            pass: password
-        }
-    });
-
-    try {
-        const testResult = await transport.verify();
-        console.log(testResult);
-    }
-    catch(e) {
-        console.log(e);
-    }
-
-    try {
-        const sendResult = await transport.sendMail({
-            from: from,
-            to: to,
-            subject: subject,
-            html: body
-        });
-        
-        console.log(sendResult);
-    }
-    catch(e) {
-        console.log(e);
-    }
 }

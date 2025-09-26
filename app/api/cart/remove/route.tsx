@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     const res = await req.json();
     const product = res.product;
     const quantity = res.quantity;
-
+    
     const conn = await mysql.createConnection(access);
 
     if (quantity > 1) {

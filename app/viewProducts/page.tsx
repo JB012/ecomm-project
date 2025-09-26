@@ -9,6 +9,7 @@ import Link from "next/link";
 import { getDiscountedPrice } from "../utils";
 import { useRouter } from "next/navigation";
 
+
 function getMostExpensiveProduct(products: ProductObject[]) : number {
     return products.reduce((acc, product) => acc < (product.price - (product.price * (product.discountPercentage/100))) && 
     acceptableCategories(product) ? (product.price - (product.price * (product.discountPercentage/100))) : acc, 0);
@@ -60,7 +61,7 @@ export default function ViewProducts() {
         setSliderValue(Math.ceil(mostExpensivePrice).toString());
         setSortProducts(sort);
        });
-    }, [category]);
+    }, [category, sort]);
 
     return (
         <>

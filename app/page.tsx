@@ -1,10 +1,7 @@
 'use client'
-import Header from "./components/Header";
 import { useState, useEffect } from "react";
 import BestSellers from "./components/BestSellers";
 import ByCategory from "./components/ByCategory";
-import NewsLetter from "./components/NewsLetter";
-import Footer from "./components/Footer";
 import HeaderPhoto from "./components/HeaderPhoto";
 import { ProductObject } from "./types/ProductObject";
 

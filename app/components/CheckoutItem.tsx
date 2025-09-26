@@ -9,6 +9,7 @@ export default function CheckoutItem({product, quantity} : {product: ProductObje
             <div className="flex w-full flex-col">
                 <div>{product.title}</div>
                 <div className="text-xs">Quantity: {quantity}</div>
+                <div className="text-xs">{product.shippingInformation}</div>
             </div>
             <div>
                 ${getDiscountedPrice(product).toFixed(2)}

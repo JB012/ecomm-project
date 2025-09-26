@@ -1,9 +1,9 @@
 "use client"
 import { FormEvent, useState } from "react"
-import { sendEmail } from "../utils";
 
 export default function NewsLetter() {
     const [input, setInput] = useState("");
+    const [buttonClick, setButtonClick] = useState(false);
 
     function handleSubmit(e : FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -13,9 +13,14 @@ export default function NewsLetter() {
     <div id="news-container" className="flex flex-col items-center px-4 pb-12">
         <div className="text-3xl font-medium py-8">Subscribe to the Newsletter</div>
         <form onSubmit={handleSubmit}>
-            <div className="flex items-center gap-4">
-                <input className="w-64" type="email" id="email" placeholder="Enter your email" name="email" onChange={(e) => setInput(e.target.value)} value={input}/>
-                <button>Subscribe</button>
+            <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-4">
+                    <input className="w-64" type="email" id="email" placeholder="Enter your email" name="email" onChange={(e) => setInput(e.target.value)} value={input}/>
+                    {buttonClick === false ? <button type="submit" onClick={() => setButtonClick(true)}>Subscribe</button> : <button className="pointer-events-none opacity-50 cursor-none">Subscribe</button>}
+                </div>
+                {
+                    buttonClick === true ? <div>Thank you for subscribing, please check your email!</div> : <div></div>
+                }
             </div>
         </form>
     </div>)

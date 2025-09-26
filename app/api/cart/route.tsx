@@ -1,5 +1,4 @@
 import { ProductObject } from "@/app/types/ProductObject";
-import { exec } from "child_process";
 import mysql, { ConnectionOptions, RowDataPacket } from "mysql2/promise";
 import { NextResponse } from "next/server";
 

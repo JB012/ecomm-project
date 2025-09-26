@@ -5,6 +5,7 @@ import { ProductObject } from "../types/ProductObject";
 interface Prop {
     product: ProductObject;
 }
+
 export default function ProductItem({product}: Prop) {
     const url = "/products/" + product.id;
 

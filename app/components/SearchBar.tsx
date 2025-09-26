@@ -6,6 +6,7 @@ import { mdiMagnify } from "@mdi/js";
 
 
 export default function SearchBar() {
+    const [allProducts, setAllProducts] = useState(Array<ProductObject>);
     const [products, setProducts] = useState(Array<ProductObject>)
     const [input, setInput] = useState("");
     const [isFocused, setFocused] = useState(false);
@@ -22,6 +23,7 @@ export default function SearchBar() {
         handleFocus();
 
         fetch("/api/products").then(res => res.json()).then(data => {
+            setAllProducts(data["products"]);
             setProducts(data["products"]);
         });
 
@@ -35,20 +37,25 @@ export default function SearchBar() {
         const target = e.target as HTMLTextAreaElement;
         const word = target.value;
 
-        if (isFocused) {
-            const filteredProducts = products.filter((product) => product.title.toLowerCase().startsWith(word.toLowerCase()));
-            setProducts(filteredProducts);
-        }
-
-        
         setInput(word);
+
+        if (isFocused) {
+            const filteredProducts = allProducts.filter((product) => product.title.toLowerCase().startsWith(word.toLowerCase()));
+
+            if (filteredProducts.length === 0) {
+                setProducts(allProducts);
+            }
+            else {
+                setProducts(filteredProducts);
+            }
+        }
     }
 
     return (
         <div className="flex flex-col relative">
             <div className="flex">
                 <Icon path={mdiMagnify} color={"black"} size={1} />
-                <input className='flex-1 outline-0 w-2xl bg-white rounded-full' ref={inputRef} value={input} onChange={((e) => retrievingQueryItems(e))} placeholder="Search item here"></input>
+                <input className='flex-1 px-2 outline-0 w-2xl bg-white rounded-full' ref={inputRef} value={input} onChange={((e) => retrievingQueryItems(e))} placeholder="Search item here"></input>
             </div>
             <div className="flex flex-col absolute w-[450px] z-20 top-8 left-6">
                 {input !== "" && products.slice(0,10).map((product) => <SearchItem key={product.id} setInput={setInput} product={product} />)}
