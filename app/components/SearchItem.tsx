@@ -11,9 +11,11 @@ export default function SearchItem({product, setInput} : {product : ProductObjec
     }, []);
     
     return (
-        <Link onClick={() => setInput("")} href={`${host}/products/${product.id}`} className="flex gap-4 bg-white items-center">
-                <Image src={product.images[0]} alt="Product Image" width={50} height={80} />
-                <div>{product.title}</div>
-        </Link>
+        <li>
+            <Link onClick={() => setInput("")} href={`${host}/products/${product.id}`} className="flex gap-4 bg-white items-center">
+                    <Image src={product.images[0]} alt="Product Image" width={50} height={80} />
+                    <div>{product.title}</div>
+            </Link>
+        </li>
     )
 }
