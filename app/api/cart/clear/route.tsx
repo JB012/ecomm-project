@@ -1,10 +1,6 @@
 import mysql, { ConnectionOptions } from "mysql2/promise";
 import { NextResponse } from "next/server";
-
-const access: ConnectionOptions = {
-    user: process.env.DB_USER,
-    database: process.env.DB_NAME
-};
+import { access } from "@/app/lib/data";
 
 export async function POST() {
     const conn = await mysql.createConnection(access);

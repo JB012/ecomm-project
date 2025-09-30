@@ -1,6 +1,7 @@
 import { ProductObject } from '@/app/types/ProductObject';
 import { NextResponse } from 'next/server';
-import mysql, { ConnectionOptions, RowDataPacket } from 'mysql2/promise';
+import mysql, { RowDataPacket } from 'mysql2/promise';
+import { access } from "@/app/lib/data";
 
 interface Product extends RowDataPacket {
   productItem: string,
@@ -9,11 +10,6 @@ interface Product extends RowDataPacket {
 }
 
 export async function GET() {
-  const access: ConnectionOptions = {
-    user: process.env.DB_USER,
-    database: process.env.DB_NAME
-  };
-
   const conn = await mysql.createConnection(access);
 
   const sql = 'SELECT * FROM products WHERE productID IS NOT NULL OR productName IS NOT NULL OR productItem IS NOT NULL';

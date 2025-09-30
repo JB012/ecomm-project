@@ -1,11 +1,6 @@
-import mysql, { ConnectionOptions } from "mysql2/promise";
+import mysql from "mysql2/promise";
 import { NextResponse } from "next/server";
-
-const access: ConnectionOptions = {
-    user: process.env.DB_USER,
-    database: process.env.DB_NAME
-};
-
+import { access } from "@/app/lib/data";
 
 export async function POST(req: Request) {
     const res = await req.json();

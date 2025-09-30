@@ -1,11 +1,8 @@
 import { ProductObject } from "@/app/types/ProductObject";
-import mysql, { ConnectionOptions, RowDataPacket } from "mysql2/promise";
+import mysql, { RowDataPacket } from "mysql2/promise";
 import { NextResponse } from "next/server";
+import { access } from "@/app/lib/data";
 
-const access: ConnectionOptions = {
-    user: process.env.DB_USER,
-    database: process.env.DB_NAME
-};
 
 interface Cart extends RowDataPacket {
     cartID: number,
