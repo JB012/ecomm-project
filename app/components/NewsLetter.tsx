@@ -15,7 +15,8 @@ export default function NewsLetter() {
         <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-4">
                 <div className="flex items-center gap-4">
-                    <input className="w-64" type="email" id="email" placeholder="Enter your email" name="email" onChange={(e) => setInput(e.target.value)} value={input}/>
+                    <input disabled className="w-64" type="email" id="email" placeholder="Enter your email" name="email" onChange={(e) => setInput(e.target.value)} value={input}/>
+                    <div className="hidden">Work in progress - disabled for security reasons and only gmails work</div>
                     {buttonClick === false ? <button type="submit" onClick={() => setButtonClick(true)}>Subscribe</button> : <button className="pointer-events-none opacity-50 cursor-none">Subscribe</button>}
                 </div>
                 {
