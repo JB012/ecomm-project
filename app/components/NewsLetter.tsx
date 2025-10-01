@@ -1,13 +1,20 @@
 "use client"
-import { FormEvent, useState } from "react"
+import { FormEvent, useState, useEffect } from "react"
 
 export default function NewsLetter() {
     const [input, setInput] = useState("");
     const [buttonClick, setButtonClick] = useState(false);
+    const [host, setHost] = useState("");
+
+    useEffect(() => {
+        if (host === "") {
+            setHost(window.location.origin);
+        }
+    }, [host]);
 
     function handleSubmit(e : FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        fetch(`${window.location.origin}/api/send/newsletter`, {method: "POST", body: JSON.stringify({email: input})});
+        fetch(`${host}/api/send/newsletter`, {method: "POST", body: JSON.stringify({email: input})});
     }
     return (
     <div id="news-container" className="flex flex-col items-center px-4 pb-12">

@@ -10,11 +10,16 @@ export default function Checkout() {
     const [clicked, setClicked] = useState(false);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [host, setHost] = useState("");
 
     useEffect(() => {
         fetch(`${window.location.origin}/api/cart`).then(res => res.json()).then(data => {
             if (data.cart !== null) {
                 setCartItems(data.cart);
+            }
+
+            if (host === "") {
+                setHost(window.location.origin);
             }
         });
 
@@ -22,19 +27,19 @@ export default function Checkout() {
             const intervalID = setInterval(() => {
                 if (clicked && name !== "" && email !== "") {
                     clearInterval(intervalID);
-                    fetch('api/cart/clear', {method: "POST"});
-                    redirect("/");
+                    fetch(`${host}/api/cart/clear`, {method: "POST"});
+                    redirect(host);
                 }
                
             }, 10000);
         }
         
         handleInterval();
-    }, [clicked, name, email]);
+    }, [clicked, host, name, email]);
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        fetch("api/send/checkout", {method: "POST", body: JSON.stringify({name: name, email: email, cartItems: cartItems})})
+        fetch(`${host}/api/send/checkout`, {method: "POST", body: JSON.stringify({name: name, email: email, cartItems: cartItems})})
     }
 
     function handleClick() {

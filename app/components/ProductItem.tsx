@@ -1,17 +1,24 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ProductObject } from "../types/ProductObject";
+import { useState, useEffect } from "react";
 
 interface Prop {
     product: ProductObject;
 }
 
 export default function ProductItem({product}: Prop) {
-    const url = `${window.location.origin}/products/` + product.id;
+    const [host, setHost] = useState("");
 
+    useEffect(() => {
+        if (host === "") {
+            setHost(window.location.origin);
+        }
+    }, [host]);
+    
     return (
         <>
-        <Link href={url} className="flex flex-col gap-2 cursor-pointer">
+        <Link href={`${host}/products/${product.id}`} className="flex flex-col gap-2 cursor-pointer">
             <div className="h-70 w-50">
                 <Image src={product.thumbnail} alt="Product Item" width={0} height={0} sizes="100px" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
             </div>

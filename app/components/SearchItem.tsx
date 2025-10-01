@@ -7,8 +7,10 @@ export default function SearchItem({product, setInput} : {product : ProductObjec
     const [host, setHost] = useState("");
 
     useEffect(() => {
-        setHost(window.location.origin);
-    }, []);
+        if (host === "") {
+            setHost(window.location.origin);
+        }
+    }, [host]);
     
     return (
         <li>
