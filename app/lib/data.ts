@@ -18,6 +18,14 @@ export async function getCart() {
     return cart ? cart : [];
 }
 
+export function getOrigin(origin: string) {
+    if (origin === "localhost") {
+        return process.env.NEXT_PUBLIC_LOCAL_URL;
+    }
+
+    return process.env.NEXT_PUBLIC_API_URL;
+}
+
 export const access: ConnectionOptions = {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
