@@ -3,7 +3,6 @@ import { ProductObject } from "../types/ProductObject";
 import SearchItem from "./SearchItem";
 import Icon from "@mdi/react";
 import { mdiMagnify } from "@mdi/js";
-import { getOrigin } from "../lib/data";
 
 
 export default function SearchBar() {
@@ -23,7 +22,7 @@ export default function SearchBar() {
 
         handleFocus();
 
-        fetch(`${getOrigin(window.location.origin)}/api/products`).then(res => res.json()).then(data => {
+        fetch(`${window.location.origin}/api/products`).then(res => res.json()).then(data => {
             setAllProducts(data["products"]);
             setProducts(data["products"]);
         });

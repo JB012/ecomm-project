@@ -9,7 +9,7 @@ import '../../globals.css';
 import { ProductObject } from "../../types/ProductObject"
 import { useRouter } from "next/navigation"
 import { getDiscountedPrice } from "@/app/utils"
-import { addCartItem, getOrigin } from "@/app/lib/data"
+import { addCartItem } from "@/app/lib/data"
 
 let reviewKey = 0;
 
@@ -78,7 +78,7 @@ export default function Products({params}: {params: Promise<{ id: string }>}) {
     }
 
     useEffect(() => {
-        fetch(`${getOrigin(window.location.origin)}/api/products`).then(res => res.json()).then(data => {
+        fetch(`${window.location.origin}/api/products`).then(res => res.json()).then(data => {
             const findProduct = data.products.find((product : ProductObject) => product.id.toString() === id);
 
             if (findProduct !== undefined) {

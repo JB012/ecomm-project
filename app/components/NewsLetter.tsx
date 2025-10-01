@@ -1,6 +1,5 @@
 "use client"
 import { FormEvent, useState } from "react"
-import { getOrigin } from "../lib/data";
 
 export default function NewsLetter() {
     const [input, setInput] = useState("");
@@ -8,7 +7,7 @@ export default function NewsLetter() {
 
     function handleSubmit(e : FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        fetch(`${getOrigin(window.location.origin)}/api/send/newsletter`, {method: "POST", body: JSON.stringify({email: input})});
+        fetch(`${window.location.origin}/api/send/newsletter`, {method: "POST", body: JSON.stringify({email: input})});
     }
     return (
     <div id="news-container" className="flex flex-col items-center px-4 pb-12">

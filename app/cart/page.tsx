@@ -4,7 +4,7 @@ import CartItem from "../components/CartItem"
 import Link from "next/link"
 import { ProductObject } from "../types/ProductObject";
 import { getDiscountedPrice } from "../utils";
-import { addCartItem , subtractCartItem, getCart, getOrigin} from "../lib/data";
+import { addCartItem , subtractCartItem, getCart} from "../lib/data";
 
 let key = 0;
 
@@ -12,7 +12,7 @@ export default function Cart() {
     const [cartItems, setCartItems] = useState(Array<{product: ProductObject, quantity: number}>);
 
     useEffect(() => {
-    fetch(`${getOrigin(window.location.origin)}/api/cart`).then(res => res.json()).then(data => {
+    fetch(`${window.location.origin}/api/cart`).then(res => res.json()).then(data => {
         if (data.cart !== null) {
             setCartItems(data.cart);
         }

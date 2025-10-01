@@ -4,13 +4,12 @@ import BestSellers from "./components/BestSellers";
 import ByCategory from "./components/ByCategory";
 import HeaderPhoto from "./components/HeaderPhoto";
 import { ProductObject } from "./types/ProductObject";
-import { getOrigin } from "./lib/data";
 
 export default function Home() {
   const [products, setProducts] = useState(Array<ProductObject>);
 
   useEffect(() => {
-    fetch(`${getOrigin(window.location.origin)}/api/products`).then(res => res.json()).then(data => setProducts(data.products));
+    fetch(`${window.location.origin}/api/products`).then(res => res.json()).then(data => setProducts(data.products));
   }, []);
 
   return (

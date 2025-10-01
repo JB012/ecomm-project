@@ -4,7 +4,6 @@ import { ProductObject } from "../types/ProductObject";
 import { getDiscountedPrice } from "../utils";
 import CheckoutItem from "../components/CheckoutItem";
 import { redirect } from 'next/navigation'
-import { getOrigin } from "../lib/data";
 
 export default function Checkout() {
     const [cartItems, setCartItems] = useState(Array<{product: ProductObject, quantity: number}>)
@@ -13,7 +12,7 @@ export default function Checkout() {
     const [email, setEmail] = useState("");
 
     useEffect(() => {
-        fetch(`${getOrigin(window.location.origin)}/api/cart`).then(res => res.json()).then(data => {
+        fetch(`${window.location.origin}/api/cart`).then(res => res.json()).then(data => {
             if (data.cart !== null) {
                 setCartItems(data.cart);
             }

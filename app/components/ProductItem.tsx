@@ -1,14 +1,13 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ProductObject } from "../types/ProductObject";
-import { getOrigin } from "../lib/data";
 
 interface Prop {
     product: ProductObject;
 }
 
 export default function ProductItem({product}: Prop) {
-    const url = `${getOrigin(window.location.origin)}/products/` + product.id;
+    const url = `${window.location.origin}/products/` + product.id;
 
     return (
         <>
