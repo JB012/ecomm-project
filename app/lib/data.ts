@@ -19,6 +19,7 @@ export async function getCart() {
 }
 
 export function getOrigin(origin: string) {
+    console.log(`origin is ${origin}`);
     if (origin.includes("localhost")) {
         return process.env.NEXT_PUBLIC_LOCAL_URL;
     }
