@@ -78,15 +78,15 @@ export default function ViewProducts() {
                                     <div className="text-2xl pb-2">Browse By</div>
                                     <hr className="py-2"></hr>
                                     <ul className="flex flex-col text-sm gap-1">
-                                        <li><Link href={"/viewProducts?category=all&sort=asc_name"}>All Products</Link></li>
-                                        <li><Link href={"viewProducts?category=beauty&sort=asc_name"}>Beauty</Link></li>
-                                        <li><Link href={"viewProducts?category=fragrances&sort=asc_name"}>Fragrances</Link></li>
-                                        <li><Link href={"viewProducts?category=furniture&sort=asc_name"}>Furniture</Link></li>
-                                        <li><Link href={"viewProducts?category=groceries&sort=asc_name"}>Groceries</Link></li>
-                                        <li><Link href={"viewProducts?category=kitchen-accessories&sort=asc_name"}>Kitchen Accessories</Link></li>
-                                        <li><Link href={"viewProducts?category=home-decoration&sort=asc_name"}>Home Decorations</Link></li>
-                                        <li><Link href={"viewProducts?category=womens-shoes&sort=asc_name"}>Women&apos;s Shoes</Link></li>
-                                        <li><Link href={"viewProducts?category=mens-shirts&sort=asc_name"}>Men&apos;s Shirts</Link></li>
+                                        <li><Link href={`${window.location.origin}/viewProducts?category=all&sort=asc_name`}>All Products</Link></li>
+                                        <li><Link href={`${window.location.origin}/viewProducts?category=beauty&sort=asc_name`}>Beauty</Link></li>
+                                        <li><Link href={`${window.location.origin}/viewProducts?category=fragrances&sort=asc_name`}>Fragrances</Link></li>
+                                        <li><Link href={`${window.location.origin}/viewProducts?category=furniture&sort=asc_name`}>Furniture</Link></li>
+                                        <li><Link href={`${window.location.origin}/viewProducts?category=groceries&sort=asc_name`}>Groceries</Link></li>
+                                        <li><Link href={`${window.location.origin}/viewProducts?category=kitchen-accessories&sort=asc_name`}>Kitchen Accessories</Link></li>
+                                        <li><Link href={`${window.location.origin}/viewProducts?category=home-decoration&sort=asc_name`}>Home Decorations</Link></li>
+                                        <li><Link href={`${window.location.origin}/viewProducts?category=womens-shoes&sort=asc_name`}>Women&apos;s Shoes</Link></li>
+                                        <li><Link href={`${window.location.origin}/viewProducts?category=mens-shirts&sort=asc_name`}>Men&apos;s Shirts</Link></li>
                                     </ul>
                                 </div>
                                 <div className="flex flex-col">

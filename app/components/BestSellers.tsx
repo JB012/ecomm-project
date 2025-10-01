@@ -3,6 +3,7 @@ import ProductItem from "./ProductItem"
 import { mdiGreaterThan, mdiLessThan } from "@mdi/js"
 import { ProductObject } from "../types/ProductObject"
 import { useState } from "react";
+import Link from "next/link";
 
 interface Prop {
     products: Array<ProductObject>;
@@ -19,7 +20,7 @@ export default function BestSellers({products}: Prop) {
             <div className="flex w-full flex-col">
                 <div className="flex py-2 justify-center items-center relative">
                     <div className="text-3xl font-medium pb-2">Best Sellers</div>
-                    <button className=" absolute right-4">See More</button>
+                    <Link href={`${window.location.origin}/viewProducts?category=all&sort=best_sellers`}><button className=" absolute right-4">See More</button></Link>
                 </div>
                 <div className="flex self-center gap-8">
                     {
