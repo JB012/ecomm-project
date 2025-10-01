@@ -55,7 +55,7 @@ export default function Checkout() {
                             <input required onChange={(e) => setName(e.target.value)} value={name} className="bg-gray-100 outline outline-black" name="full_name"/>
                         </div>
                         <div className="flex flex-col w-72">
-                            <div>Email</div>
+                            <div>Gmail</div>
                             <input required onChange={(e) => setEmail(e.target.value)} value={email} className="bg-gray-100 outline outline-black" name="email" type="email" />
                         </div>
                     </fieldset>
